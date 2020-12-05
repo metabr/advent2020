@@ -1,25 +1,25 @@
 import re
 
-INPUT = "day04.txt"
 
-passports = []
-new_passport = True
+def input():
+    passports = []
+    new_passport = True
 
-with open(INPUT) as input:
-    for line in input.readlines():
-        if line == "\n":
-            new_passport = True
-        elif new_passport == True:
-            passports.append(line.strip("\n"))
-            new_passport = False
-        else:
-            passports[-1] += " " + line.strip("\n")
-
-fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]
-optional_fields = ["cid"]
+    with open("day04.txt") as input:
+        for line in input.readlines():
+            if line == "\n":
+                new_passport = True
+            elif new_passport == True:
+                passports.append(line.strip("\n"))
+                new_passport = False
+            else:
+                passports[-1] += " " + line.strip("\n")
+    return passports
 
 
 def is_passport_valid(passport):
+    fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]
+    optional_fields = ["cid"]
     missing_fields = []
     for field in fields:
         if not passport.get(field):
