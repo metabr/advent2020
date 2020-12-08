@@ -16,27 +16,29 @@ class VM:
         self.instructions = instructions
         self.terminated = False
 
-    def add(self, argument):
-        self.acc += argument
+    def add(self, arg):
+        self.acc += arg
         self.ip += 1
 
-    def jmp(self, argument):
-        self.ip += argument
+    def jmp(self, arg):
+        self.ip += arg
 
     def next(self):
-        print(f"ip: {self.ip}, acc: {self.acc}")
         if self.ip == len(self.instructions):
-            print("Successful termination!")
+            print("Successfully terminated.")
             self.terminated = True
             return
+
+        print(f"ip: {self.ip}, acc: {self.acc}, next instruction: {self.instructions[self.ip]}")
+
         self.seen.append(self.ip)
-        instruction, argument = self.instructions[self.ip]
-        print(f"ins: {instruction}, arg: {argument}")
-        if instruction == "acc":
-            self.add(argument)
-        elif instruction == "jmp":
-            self.jmp(argument)
+        op, arg = self.instructions[self.ip]
+        if op == "acc":
+            self.add(arg)
+        elif op == "jmp":
+            self.jmp(arg)
         else:
+            # nop
             self.ip += 1
 
 
@@ -45,10 +47,14 @@ def replace_first_instruction(instructions, start):
     for i in range(start, len(instructions)):
         op, arg = instructions[i]
         if op == "nop" and arg != 0:
-            instructions[i] = ("jmp", arg)
+            new_instruction = ("jmp", arg)
+            print(f"Replacing {instructions[i]} with {new_instruction} at offset {i}")
+            instructions[i] = new_instruction
             return (instructions, i+1)
         elif op == "jmp":
-            instructions[i] = ("nop", arg)
+            new_instruction = ("nop", arg)
+            print(f"Replacing {instructions[i]} with {new_instruction} at offset {i}")
+            instructions[i] = new_instruction
             return (instructions, i+1)
         i += 1
     return (instructions, i)
@@ -58,9 +64,10 @@ start = 0
 
 while not vm.terminated:
     if vm.ip in vm.seen:
+        print(f"acc value: {vm.acc}")
         print("Loop detected, try to change instructions")
         new_instructions, start = replace_first_instruction(instructions, start)
         vm = VM(new_instructions)
     vm.next()
 
-print(vm.acc)
+print(f"acc value: {vm.acc}")
