@@ -22,6 +22,17 @@ def is_sum_of_pair(n, ns):
     print("Nope.")
     return False
 
+
+def find_sequence(n, ns):
+    t = ns[:1]
+    for i in range(2, len(ns)):
+        if sum(t) == n:
+            return t
+        elif sum(t) > n:
+            return False
+        t = ns[:i]
+    return False
+
 for i in range(len(rest)):
     n = rest[0]
     if is_sum_of_pair(n, preamble):
@@ -31,3 +42,10 @@ for i in range(len(rest)):
     else:
         print(f"Number {n} is not sum of previous {preamble_length} numbers.")
         break
+for i in range(len(ns)-1):
+    r = find_sequence(n, ns[i:])
+    if r and n not in r:
+        print(f"Resulting sequence: {r}")
+        min_ = min(r)
+        max_ = max(r)
+        print(f"{min_} + {max_} = {min_ + max_}")
