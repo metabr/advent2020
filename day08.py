@@ -2,6 +2,7 @@ def parse(line):
     instruction, argument = line.strip("\n").split(" ")
     return (instruction, int(argument))
 
+
 instructions = []
 with open("day08.txt") as input:
     for line in input.readlines():
@@ -29,7 +30,9 @@ class VM:
             self.terminated = True
             return
 
-        print(f"ip: {self.ip}, acc: {self.acc}, next instruction: {self.instructions[self.ip]}")
+        print(
+            f"ip: {self.ip}, acc: {self.acc}, next instruction: {self.instructions[self.ip]}"
+        )
 
         self.seen.append(self.ip)
         op, arg = self.instructions[self.ip]
@@ -50,14 +53,15 @@ def replace_first_instruction(instructions, start):
             new_instruction = ("jmp", arg)
             print(f"Replacing {instructions[i]} with {new_instruction} at offset {i}")
             instructions[i] = new_instruction
-            return (instructions, i+1)
+            return (instructions, i + 1)
         elif op == "jmp":
             new_instruction = ("nop", arg)
             print(f"Replacing {instructions[i]} with {new_instruction} at offset {i}")
             instructions[i] = new_instruction
-            return (instructions, i+1)
+            return (instructions, i + 1)
         i += 1
     return (instructions, i)
+
 
 vm = VM(instructions)
 start = 0

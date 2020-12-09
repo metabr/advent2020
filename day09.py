@@ -11,6 +11,7 @@ print(ns)
 print(preamble)
 print(rest)
 
+
 def is_sum_of_pair(n, ns):
     print(f"is {n} a sum of two of {ns}?")
     for n_ in ns:
@@ -33,6 +34,7 @@ def find_sequence(n, ns):
         t = ns[:i]
     return False
 
+
 for i in range(len(rest)):
     n = rest[0]
     if is_sum_of_pair(n, preamble):
@@ -42,7 +44,8 @@ for i in range(len(rest)):
     else:
         print(f"Number {n} is not sum of previous {preamble_length} numbers.")
         break
-for i in range(len(ns)-1):
+
+for i in range(len(ns) - 1):
     r = find_sequence(n, ns[i:])
     if r and n not in r:
         print(f"Resulting sequence: {r}")

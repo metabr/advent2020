@@ -28,6 +28,5 @@ print(f"Highest seat id: {highest_seat_id}")
 
 seat_ids.sort()
 for i in range(len(seat_ids) - 1):
-    if seat_ids[i+1] != seat_ids[i] + 1:
+    if seat_ids[i + 1] != seat_ids[i] + 1:
         print(f"Seat between {seat_ids[i]} and {seat_ids[i+1]} is your seat, probably.")
-

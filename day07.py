@@ -27,6 +27,7 @@ def direct_contains(colors):
                 result.add(bag_color)
     return result
 
+
 # Part 1
 result = direct_contains(["shiny gold"])
 n_colors = 0
@@ -43,5 +44,6 @@ def count_bags_inside(col):
         result += count
         result += count * count_bags_inside(next_col)
     return result
+
 
 print(f"Bags inside shiny gold one: {count_bags_inside('shiny gold')}")

@@ -2,12 +2,14 @@ INPUT = "day01.txt"
 
 ns = []
 
+
 def find_numbers(ns, desired_sum=2020):
     for n in ns:
         target = desired_sum - n
         if target in ns:
             return (n, target)
     return False
+
 
 with open(INPUT) as input:
     ns = [int(x) for x in input.read().split("\n")]
