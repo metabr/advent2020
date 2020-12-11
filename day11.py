@@ -10,7 +10,6 @@ def read_seats():
 
 
 seats = read_seats()
-print(seats)
 size_y = len(seats[0])
 size_x = len(seats)
 
@@ -42,6 +41,30 @@ def adjacent_seats(pattern, x, y):
     return seats
 
 
+def seats_in_direction(pattern, x, y):
+    seats = []
+    directions = [
+        lambda x, y: (x, y + 1),
+        lambda x, y: (x, y - 1),
+        lambda x, y: (x + 1, y + 1),
+        lambda x, y: (x + 1, y - 1),
+        lambda x, y: (x - 1, y + 1),
+        lambda x, y: (x - 1, y - 1),
+        lambda x, y: (x + 1, y),
+        lambda x, y: (x - 1, y),
+    ]
+    for d in directions:
+        p = d(x, y)
+        while valid_position(p):
+            x_, y_ = p
+            s = pattern[x_][y_]
+            if s != ".":
+                seats.append(s)
+                break
+            p = d(x_, y_)
+    return seats
+
+
 def print_seats(seats):
     for row in seats:
         print("".join(row))
@@ -61,11 +84,11 @@ def step(seats):
     for x in range(size_x):
         for y in range(size_y):
             seat = seats[x][y]
-            adj = adjacent_seats(seats, x, y)
+            adj = seats_in_direction(seats, x, y)
             count = Counter(adj)
             if seat == "L" and not "#" in adj:
                 r[x][y] = "#"
-            elif seat == "#" and count["#"] >= 4:
+            elif seat == "#" and count["#"] >= 5:
                 r[x][y] = "L"
             else:
                 r[x][y] = seat
