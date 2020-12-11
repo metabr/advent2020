@@ -65,9 +65,14 @@ def seats_in_direction(pattern, x, y):
     return seats
 
 
-def print_seats(seats):
-    for row in seats:
-        print("".join(row))
+def print_seats(seats, filename=None):
+    output = "\n".join(["".join(row) for row in seats])
+    if filename:
+        with open(filename, "w") as output_file:
+            output_file.write(output)
+            output_file.write("\n")
+    else:
+        print(output)
 
 
 def occupied(seats):
@@ -95,13 +100,20 @@ def step(seats):
     return r
 
 
+def out_file(i):
+    return "output" + "%03d" % (i) + ".txt"
+
+
 prev_occupied = -1
 curr_occupied = occupied(seats)
 
+print_seats(seats, out_file(0))
+i = 1
 while prev_occupied != curr_occupied:
     seats = step(seats)
     prev_occupied = curr_occupied
     curr_occupied = occupied(seats)
-    print("New pattern:")
+    #print_seats(seats, out_file(i))
     print_seats(seats)
+    i += 1
     print(f"Occupied seats: {curr_occupied}")
