@@ -3,45 +3,52 @@ def read_instructions(filename="day12.txt"):
         return input.readlines()
 
 
-DIRECTIONS = ["N", "E", "S", "W"]
-
 class Ship:
     def __init__(self):
         self.x = 0
         self.y = 0
-        self.facing = "E"
+
+        self.wx = 1
+        self.wy = 10
 
     def __str__(self):
-        return f"I'm at ({self.x}, {self.y}) facing {self.facing}"
+        return f"I'm at ({self.x}, {self.y}) with waypoint {self.wx} norther and {self.wy} eastier"
 
     def N(self, arg):
-        self.x += arg
+        self.wx += arg
 
     def S(self, arg):
-        self.x -= arg
+        self.wx -= arg
 
     def E(self, arg):
-        self.y += arg
+        self.wy += arg
 
     def W(self, arg):
-        self.y -= arg
+        self.wy -= arg
+
+    def l(self):
+        x = self.wy
+        y = -self.wx
+        self.wx = x
+        self.wy = y
+
+    def r(self):
+        x = -self.wy
+        y = self.wx
+        self.wx = x
+        self.wy = y
 
     def R(self, arg):
-        current_pos = DIRECTIONS.index(self.facing)
-        shift_pos = int(arg / 90)
-        new_pos = (current_pos + shift_pos) % len(DIRECTIONS)
-        self.facing = DIRECTIONS[new_pos]
+        for _ in range(arg // 90):
+            self.r()
 
     def L(self, arg):
-        self.R(-arg)
+        for _ in range(arg // 90):
+            self.l()
 
     def F(self, arg):
-        getattr(self, self.facing)(arg)
-
-    def B(self, arg):
-        self.R(180)
-        self.F(arg)
-        self.R(180)
+        self.x += arg * self.wx
+        self.y += arg * self.wy
 
     def handle_instruction(self, instruction):
         print(f"Instruction: {instruction}")
@@ -52,6 +59,7 @@ class Ship:
 
     def manhattan_distance(self):
         return abs(self.x) + abs(self.y)
+
 
 if __name__ == "__main__":
     instructions = read_instructions()
