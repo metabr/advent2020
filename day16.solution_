@@ -1,0 +1,31 @@
+
+possible fields for field 0
+	train
+possible fields for field 2
+	duration
+possible fields for field 4
+	arrival location
+possible fields for field 7
+	price
+possible fields for field 11
+	zone
+possible fields for field 14
+	seat
+possible fields for field 16
+	departure track
+possible fields for field 19
+	wagon
+possible fields for field 5
+	departure station
+possible fields for field 18
+	departure time
+possible fields for field 8
+	departure location
+possible fields for field 13
+	departure platform
+possible fields for field 10
+	departure date
+possible fields for field 1
+	arrival platform
+possible fields for field 15
+	type

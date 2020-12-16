@@ -1,0 +1,20 @@
+possible fields for field 3
+	route
+possible fields for field 6
+	class
+	route
+	row
+possible fields for field 9
+	route
+	row
+possible fields for field 12
+	class
+	arrival track
+	row
+	arrival station
+	route
+possible fields for field 17
+	class
+	arrival track
+	row
+	route
