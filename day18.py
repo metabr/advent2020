@@ -13,6 +13,13 @@ def find_sub_expression(expr):
     return False
 
 
+def find_next_addition(tokens):
+    try:
+        return tokens.index("+")
+    except ValueError as e:
+        return False
+
+
 def calculate(expr):
     sub = find_sub_expression(expr)
     while sub:
@@ -21,6 +28,15 @@ def calculate(expr):
         sub = find_sub_expression(expr)
 
     tokens = expr.strip("\n").split(" ")
+
+    next_addition = find_next_addition(tokens)
+    while next_addition:
+        a = tokens[next_addition - 1]
+        b = tokens[next_addition + 1]
+        c = str(int(a) + int(b))
+        tokens = tokens[: next_addition - 1] + [c] + tokens[next_addition + 2 :]
+        next_addition = find_next_addition(tokens)
+
     r = int(tokens[0])
     operation = None
     for tok in tokens[1:]:
